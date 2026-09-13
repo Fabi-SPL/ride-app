@@ -30,3 +30,5 @@ secrets.h
 # specifics, or other context that doesn't belong in a public repo.
 # Includes: project CLAUDE.md, HANDOFF.md, research/, future PLANS.md.
 .private/
+.claude/
+.playwright-mcp/
