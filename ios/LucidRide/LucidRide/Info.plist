@@ -60,19 +60,19 @@
 	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Lucid Ride records your motorcycle ride GPS track and links it to body-state telemetry.</string>
+	<string>Ride records your motorcycle ride GPS track and links it to body-state telemetry.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Lucid Ride records your motorcycle ride GPS track in the background, so a phone screen-off ride still captures the route.</string>
+	<string>Ride records your motorcycle ride GPS track in the background, so a phone screen-off ride still captures the route.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Lucid Ride connects to your bike's OBD adapter and BLE telemetry hardware.</string>
+	<string>Ride connects to your bike's OBD adapter and BLE telemetry hardware.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Lucid Ride needs Bluetooth to connect to bike telemetry hardware.</string>
+	<string>Ride needs Bluetooth to connect to bike telemetry hardware.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Lucid Ride uses iPhone IMU as a fallback lean-angle source when external telemetry isn't connected.</string>
+	<string>Ride uses iPhone IMU as a fallback lean-angle source when external telemetry isn't connected.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Lucid Ride reads your heart-rate samples from your Watch to overlay your body state on each ride.</string>
+	<string>Ride reads your heart-rate samples from your Watch to overlay your body state on each ride.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Lucid Ride logs each ride as a workout in the Health app so your motorcycle time counts toward your Activity rings.</string>
+	<string>Ride logs each ride as a workout in the Health app so your motorcycle time counts toward your Activity rings.</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.fabi.lucidride.telemetry-flush</string>

@@ -3,7 +3,7 @@ import SwiftUI
 // ════════════════════════════════════════════════════════════
 // LucidRide Design System — Single source of truth for all UI
 // Cloned verbatim from LucidHealth, health-engine refs stripped.
-// Based on: Lucid brand system + research spec (02-design-system-spec.html)
+// Based on: brand system + research spec (02-design-system-spec.html)
 //
 // Rules:
 //   - Never use raw Color literals (.gray, .red) — always DS.Colors.*
@@ -33,7 +33,7 @@ enum DS {
         static let pill: CGFloat = 100
     }
 
-    // MARK: - Colors (Forged Metal — LucidRide's own identity, no Lucid violet/teal)
+    // MARK: - Colors (Forged Metal — LucidRide's own identity, no Ride violet/teal)
     // Concept: metal heating up. Cold steel at cruise, amber under load,
     // ember at redline. Chrome = the headlight white from the app icon.
     enum Colors {
@@ -549,7 +549,7 @@ struct HeroCard: ViewModifier {
 }
 
 /// Specular shimmer overlay — diagonal light sweep across the hero card every
-/// 6 seconds. Per Lucid Design Bundle Tier 3 hero spec. Respects reduce-motion.
+/// 6 seconds. Per Design Bundle Tier 3 hero spec. Respects reduce-motion.
 struct SpecularShimmer: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -850,7 +850,7 @@ struct EmptyGlassState: View {
 
 // MARK: - Two-Tone Headline
 
-/// Two-tone typographic headline per Lucid Design Bundle principle 1.
+/// Two-tone typographic headline per Design Bundle principle 1.
 /// Bold primary half locks the eye in 0.3s, muted secondary half adds context
 /// without competing. Same font, same size, different weight + color.
 struct TwoToneHeadline: View {

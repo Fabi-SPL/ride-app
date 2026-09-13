@@ -140,7 +140,7 @@ jobs:
       # ONLY through AltStore PAL (Supabase Storage path, obscured URL),
       # NOT through GitHub Releases. Do not re-enable without a sign-in screen.
 
-      - name: Update AltStore Source JSON (merge — preserve other Lucid apps)
+      - name: Update AltStore Source JSON (merge — preserve other apps)
         env:
           RUN_NUMBER: ${{ github.run_number }}
         run: |
@@ -154,7 +154,7 @@ jobs:
             echo "Fetched existing source.json"
           else
             echo "No existing source.json — starting fresh"
-            echo '{"name":"Lucid AltStore","identifier":"com.fabi.lucid.altstore","apps":[]}' > /tmp/cur.json
+            echo '{"name":"AltStore","identifier":"com.fabi.lucid.altstore","apps":[]}' > /tmp/cur.json
           fi
 
           # appPermissions shape: AltStore's Codable requires
@@ -165,7 +165,7 @@ jobs:
           # "data isn't in the correct format". See landmines doc.
           NEW_ENTRY=$(cat <<JSONEND
           {
-            "name": "Lucid Ride",
+            "name": "Ride",
             "bundleIdentifier": "com.fabi.lucidride",
             "developerName": "Fabi",
             "localizedDescription": "Body-state-aware motorcycle ride telemetry. HR profile via Supabase JOIN, placeholder tiles for lean angle / GPS / segments / body-state correlation until telemetry hardware is wired.",
