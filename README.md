@@ -1,4 +1,4 @@
-# Lucid Ride
+# Ride
 
 > A SwiftUI iOS app that turns a motorcycle ride into a queryable, body-state-aware record.
 

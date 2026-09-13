@@ -1,4 +1,4 @@
-# Lucid Ride — iOS Setup
+# Ride — iOS Setup
 
 Single-screen SwiftUI app: the bike is the menu. Tap any part for that part's telemetry. Built on a GitHub Actions macOS runner, distributed exclusively via AltStore PAL.
 
@@ -25,14 +25,14 @@ The CI workflow produces a device IPA and an AltStore source JSON on every push 
    - Outside EU: install AltServer on a Mac/PC and pair AltStore via Wi-Fi — both Apple devs have walkthroughs.
 2. Open AltStore PAL → Browse tab → Sources → tap **+** in the top-right.
 3. Add source URL: `https://db.speed-running-life.com/storage/v1/object/public/ipa-builds/altstore-source.json`
-4. Tap **Add Source**. Lucid Ride appears in the source's app list.
-5. Tap **Free** / **Get** next to Lucid Ride. Sign in with your free Apple ID when prompted (used only for the on-device re-sign; never shared).
+4. Tap **Add Source**. Ride appears in the source's app list.
+5. Tap **Free** / **Get** next to Ride. Sign in with your free Apple ID when prompted (used only for the on-device re-sign; never shared).
 6. App installs to home screen.
 
 **Every install / update (~10 seconds):**
 
 1. Open AltStore PAL → My Apps tab.
-2. Tap the refresh icon next to Lucid Ride to pull the latest build.
+2. Tap the refresh icon next to Ride to pull the latest build.
 3. Re-signs and installs in place.
 
 **7-day cert refresh:** Free-Apple-ID-signed apps expire after 7 days. Open AltStore PAL → My Apps → tap the refresh icon (or hit **Refresh All**). That's it — no PC required after the initial AltStore install.

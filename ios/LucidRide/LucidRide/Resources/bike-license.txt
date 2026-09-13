@@ -11,7 +11,7 @@ Specifications:
   brake disc, calipers, etc.) with embedded texture maps
 - 17.5 MB GLB binary
 
-Chosen for the Lucid Ride aesthetic: a production-grade Ducati Super Sports
+Chosen for the Ride aesthetic: a production-grade Ducati Super Sports
 sport bike with full fairings, proper sport-bike silhouette, and PBR-correct
 materials. Loaded through GLTFKit2 with the model's original geometry and
 materials intact. The scene combines this with HDR image-based lighting

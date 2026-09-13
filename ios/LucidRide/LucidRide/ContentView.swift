@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Lucid Ride — shell.
+/// Ride — shell.
 ///
 /// Two states, one screen:
 ///   • Idle → `HomeView` (the Garage): last ride, month + lifetime stats,
