@@ -42,7 +42,7 @@ See [`ios/LucidRide/SETUP.md`](ios/LucidRide/SETUP.md) for first-time setup, inc
 ## Project layout
 
 ```
-lucid-ride/
+ride-app/
 ├── README.md                    # this file
 ├── ios/LucidRide/               # the app
 │   ├── project.yml              # XcodeGen config (don't commit the .xcodeproj)

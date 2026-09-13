@@ -62,7 +62,7 @@ Full diagnostic + recovery commands in `.private/CLAUDE.md`.
 
 ## CI prerequisites (one-time, already done)
 
-Repo secrets that must be set in https://github.com/Fabi-SPL/lucid-ride/settings/secrets/actions:
+Repo secrets that must be set in https://github.com/Fabi-SPL/ride-app/settings/secrets/actions:
 
 - `EE_TASKS_EMAIL` — Supabase auth email (sed-injected into IPA — see security note above)
 - `EE_TASKS_PASSWORD` — Supabase auth password (sed-injected into IPA — see security note above)
