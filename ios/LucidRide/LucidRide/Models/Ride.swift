@@ -2,7 +2,7 @@ import Foundation
 
 /// Ride row mapped from the existing Supabase `activities` table where
 /// `canonical_activity_type = 'motor_racing'`. The activities table is the
-/// rides table — see lucid-ride/CLAUDE.md "Common Mistake #4".
+/// rides table — see ride-app/CLAUDE.md "Common Mistake #4".
 ///
 /// Fields below are a subset of the full activities schema (lucid Health uses
 /// the same table for non-ride activities). LucidRide reads/writes only what
