@@ -43,15 +43,29 @@ jobs:
             echo "ready=true" >> $GITHUB_OUTPUT
           fi
 
-      # TestFlight groups builds under one version string, so MARKETING_VERSION
-      # stays fixed and the build number carries the increment. Commit count is
-      # monotonic; the floor keeps it ahead of anything already uploaded.
+      # The build number is the only thing TestFlight orders builds by, so it
+      # must never go backwards. Ask App Store Connect for the highest build
+      # already uploaded and go one past it (or the commit count, whichever is
+      # larger). If the lookup fails we stop rather than guess low - a lower
+      # number silently never reaches the phone.
       - name: Derive build number
         if: steps.guard.outputs.ready == 'true'
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
         run: |
-          BUILD_NUM=$(git rev-list --count HEAD)
+          set -o pipefail
+          COMMITS=$(git rev-list --count HEAD)
+          export ASC_KEY_PATH="$RUNNER_TEMP/AuthKey_derive.p8"
+          printf '%s' "$ASC_KEY_P8" > "$ASC_KEY_PATH"
+          APP=$(node scripts/asc.mjs raw GET "/v1/apps?filter[bundleId]=com.fabi.lucidride&fields[apps]=bundleId"             | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s).data[0];if(!a)process.exit(1);console.log(a.id)})')
+          PUBLISHED=$(node scripts/asc.mjs raw GET "/v1/builds?filter[app]=${APP}&limit=200&fields[builds]=version"             | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(Math.max(0,...JSON.parse(s).data.map(b=>parseInt(b.attributes.version,10)||0))))')
+          rm -f "$ASC_KEY_PATH"
+          case "$PUBLISHED" in ''|*[!0-9]*) echo "ERROR: could not read published builds from App Store Connect (got '$PUBLISHED')"; exit 1 ;; esac
+          if [ "$COMMITS" -gt "$PUBLISHED" ]; then BUILD_NUM=$COMMITS; else BUILD_NUM=$((PUBLISHED + 1)); fi
           echo "BUILD_NUM=${BUILD_NUM}" >> $GITHUB_ENV
-          echo "build ${BUILD_NUM}"
+          echo "commits=${COMMITS} published=${PUBLISHED} -> build ${BUILD_NUM}"
 
       - name: Select latest Xcode
         if: steps.guard.outputs.ready == 'true'
