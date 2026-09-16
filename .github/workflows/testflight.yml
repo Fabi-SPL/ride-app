@@ -11,6 +11,8 @@ on:
   push:
     paths:
       - 'ios/LucidRide/**'
+      - '.github/workflows/testflight.yml'
+      - 'scripts/asc.mjs'
   workflow_dispatch:
 
 jobs:
