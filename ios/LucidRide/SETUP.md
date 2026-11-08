@@ -15,7 +15,7 @@ GitHub Releases are intentionally NOT used. This is a public repo and the CI bak
 | ~~Appetize~~ | — | — | Disabled (no .app upload while creds are baked in). |
 | ~~GitHub Releases~~ | — | — | **Permanently disabled** — public repo + baked credentials. |
 
-The CI workflow produces a device IPA and an AltStore source JSON on every push to `ios/LucidRide/**`. Both are uploaded to Supabase Storage. **AltStore subscribes to the Supabase URL directly** — no Vercel / CDN layer. This is the only stable URL; any other (like `app.lucid-ai.app/altstore-source.json`) is a static copy that drifts and breaks.
+The CI workflow produces a device IPA and an AltStore source JSON on every push to `ios/LucidRide/**`. Both are uploaded to Supabase Storage. **AltStore subscribes to the Supabase URL directly** — no Vercel / CDN layer. This is the only stable URL; any other (like `app.keled.de/altstore-source.json`) is a static copy that drifts and breaks.
 
 ## First-time install via AltStore PAL
 
@@ -55,8 +55,8 @@ Known issues recurring on this pipeline — all fixed, kept here as warnings:
 1. **`appPermissions` must use the object-wrapped shape**, NOT the legacy strings/dict shape that faq.altstore.io's docs show. Real Codable wants `entitlements: [{name}]` and `privacy: [{name, usageDescription}]`. This was the actual recurring root cause of "data isn't in correct format."
 2. **`entitlements` must match the IPA's real entitlements file** — declare `com.apple.security.application-groups` because `LucidRide.entitlements` ships App Groups.
 3. **`marketplaceID` field must NOT be present on any app entry.** That field flags apps as Apple-notarized marketplace distribution; AltStore Classic refuses any source carrying it.
-4. **Subscribe AltStore to the Supabase URL directly**, never to the Vercel static copy. The Vercel file (`app.lucid-ai.app/altstore-source.json`) is legacy / not maintained.
-5. **`iconURL` must be on `app.lucid-ai.app`**, NOT Supabase. AltStore rejects Supabase Storage URLs for iconURL specifically (works fine for downloadURL).
+4. **Subscribe AltStore to the Supabase URL directly**, never to the Vercel static copy. The Vercel file (`app.keled.de/altstore-source.json`) is legacy / not maintained.
+5. **`iconURL` must be on `app.keled.de`**, NOT Supabase. AltStore rejects Supabase Storage URLs for iconURL specifically (works fine for downloadURL).
 
 Full diagnostic + recovery commands in `.private/CLAUDE.md`.
 
