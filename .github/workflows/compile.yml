@@ -2,7 +2,7 @@ name: Compile check
 
 # Simulator build with signing off. Proves the app compiles even while the
 # signed TestFlight archive is blocked on the Apple side. Placeholder config,
-# so this job needs no secrets.
+# so this job needs no secrets. Same arch settings as the TestFlight archive.
 
 on:
   push:
@@ -33,7 +33,6 @@ jobs:
       - name: Build for the simulator, signing off
         working-directory: ios/LucidRide
         run: |
-          set -o pipefail
           xcodebuild build \
             -project LucidRide.xcodeproj \
             -scheme LucidRide \
@@ -42,5 +41,8 @@ jobs:
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS=NO \
             SWIFT_VERSION=5.0 \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO EXCLUDED_ARCHS=x86_64 \
             -skipPackagePluginValidation -skipMacroValidation \
-            2>&1 | tail -60
+            > build.log 2>&1 \
+            || { grep -E ": error:" build.log | sort -u | head -30; tail -20 build.log; exit 1; }
+          tail -3 build.log
