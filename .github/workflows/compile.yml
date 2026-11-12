@@ -23,6 +23,12 @@ jobs:
           printf 'enum SupabaseSecrets {\n    static let anonKey = "compile-check"\n    static let userId  = "00000000-0000-0000-0000-000000000000"\n}\n' \
             > ios/LucidRide/LucidRide/Services/SupabaseSecrets.generated.swift
 
+      - name: Select latest Xcode
+        run: |
+          XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE_PATH/Contents/Developer"
+          xcodebuild -version
+
       - name: Install XcodeGen
         run: brew install xcodegen
 
