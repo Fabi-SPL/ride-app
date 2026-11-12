@@ -85,6 +85,19 @@ jobs:
         if: steps.guard.outputs.ready == 'true'
         run: brew install xcodegen
 
+      # The Supabase anon key and userId stay out of this public repo. CI writes
+      # them into a gitignored Swift file before xcodegen; nothing echoes a value.
+      - name: Write Supabase config from secrets
+        if: steps.guard.outputs.ready == 'true'
+        env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          LUCID_USER_ID: ${{ secrets.LUCID_USER_ID }}
+        run: |
+          [ -n "$SUPABASE_ANON_KEY" ] && [ -n "$LUCID_USER_ID" ] \
+            || { echo "::error::SUPABASE_ANON_KEY or LUCID_USER_ID secret missing"; exit 1; }
+          printf '// Written by CI from repo secrets. Never commit.\nenum SupabaseSecrets {\n    static let anonKey = "%s"\n    static let userId  = "%s"\n}\n' \
+            "$SUPABASE_ANON_KEY" "$LUCID_USER_ID" > ios/LucidRide/LucidRide/Services/SupabaseSecrets.generated.swift
+
       - name: Generate Xcode project from project.yml
         if: steps.guard.outputs.ready == 'true'
         working-directory: ios/LucidRide
@@ -108,9 +121,8 @@ jobs:
             || { echo "ERROR: ASC_KEY_P8 is not a PEM private key. Paste the whole .p8 including BEGIN/END."; exit 1; }
           echo "Key installed."
 
-      # No credential injection here by design - the app talks to Supabase with
-      # the public anon key behind RLS. Do not re-add a sed step; see the note
-      # in build-lucidride.yml.
+      # No sed into source files: the Supabase config has its own gitignored
+      # file, written in "Write Supabase config from secrets" above.
       - name: Inject commit SHA + build date
         if: steps.guard.outputs.ready == 'true'
         run: |
@@ -244,10 +256,3 @@ jobs:
           fi
           echo "Uploaded. Apple processes it in 5-30 min, then it appears in TestFlight."
 
-      - name: Keep the IPA as an artifact
-        if: steps.guard.outputs.ready == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Ride-testflight-${{ env.BUILD_NUM }}
-          path: ${{ runner.temp }}/export/*.ipa
-          retention-days: 14

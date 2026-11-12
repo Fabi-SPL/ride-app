@@ -1,0 +1,46 @@
+name: Compile check
+
+# Simulator build with signing off. Proves the app compiles even while the
+# signed TestFlight archive is blocked on the Apple side. Placeholder config,
+# so this job needs no secrets.
+
+on:
+  push:
+    paths:
+      - 'ios/LucidRide/**'
+      - '.github/workflows/compile.yml'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Placeholder Supabase config
+        run: |
+          printf 'enum SupabaseSecrets {\n    static let anonKey = "compile-check"\n    static let userId  = "00000000-0000-0000-0000-000000000000"\n}\n' \
+            > ios/LucidRide/LucidRide/Services/SupabaseSecrets.generated.swift
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios/LucidRide
+        run: xcodegen generate
+
+      - name: Build for the simulator, signing off
+        working-directory: ios/LucidRide
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project LucidRide.xcodeproj \
+            -scheme LucidRide \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath $RUNNER_TEMP/DerivedData \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+            ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS=NO \
+            SWIFT_VERSION=5.0 \
+            -skipPackagePluginValidation -skipMacroValidation \
+            2>&1 | tail -60

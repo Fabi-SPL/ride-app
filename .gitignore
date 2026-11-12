@@ -6,6 +6,9 @@ xcuserdata/
 # Xcode-generated project (XcodeGen produces it from project.yml)
 ios/LucidRide/LucidRide.xcodeproj/
 
+# Supabase config, written by CI from repo secrets
+ios/LucidRide/LucidRide/Services/SupabaseSecrets.generated.swift
+
 # Build outputs
 build/
 DerivedData/

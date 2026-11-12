@@ -12,14 +12,18 @@ import Foundation
 /// The anon key is public by design (it ships in every client). Security comes
 /// from the row-scoped server policies, not from hiding the key.
 ///
+/// The key and userId still stay out of this public repo: CI writes them into
+/// SupabaseSecrets.generated.swift (gitignored) from the repo secrets
+/// SUPABASE_ANON_KEY and LUCID_USER_ID before xcodegen runs.
+///
 /// No dependencies — just URLSession.
 final class SupabaseClient {
 
     static let shared = SupabaseClient()
 
     let baseURL = "https://db.speed-running-life.com"
-    let anonKey = "SUPABASE_ANON_KEY_REMOVED"
-    let userId  = "00000000-0000-0000-0000-000000000000"
+    let anonKey = SupabaseSecrets.anonKey
+    let userId  = SupabaseSecrets.userId
 
     // Fail-fast session: 15 s request timeout + no connectivity-waiting, so an
     // offline flush / PATCH errors quickly instead of hanging the ride teardown.
